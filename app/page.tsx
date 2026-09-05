@@ -111,6 +111,9 @@ export default function HomePage() {
           const event = JSON.parse(line) as { type?: string; content?: string; message?: string };
           if (event.type === "item" && event.content) {
             assembled += event.content;
+            setMessages((current) =>
+              current.map((item) => (item.id === botId ? { ...item, content: assembled } : item)),
+            );
           }
           if (event.type === "error") {
             throw new Error(event.message || "Erreur pendant la réponse.");
@@ -173,9 +176,14 @@ export default function HomePage() {
             <div className="bubble">
               {loading && message.role === "bot" && !message.content && message.id === messages.at(-1)?.id ? (
                 <span className="spinner" aria-label="Chargement" />
-              ) : message.content ? (
-                formatText(message.content)
-              ) : null}
+              ) : (
+                <>
+                  {message.content ? formatText(message.content) : null}
+                  {loading && message.role === "bot" && message.id === messages.at(-1)?.id ? (
+                    <span className="cursor" />
+                  ) : null}
+                </>
+              )}
             </div>
           </div>
         ))}

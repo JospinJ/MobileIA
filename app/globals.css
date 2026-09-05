@@ -160,6 +160,22 @@ body {
   animation: spin 0.7s linear infinite;
 }
 
+.cursor {
+  display: inline-block;
+  width: 7px;
+  height: 14px;
+  margin-left: 3px;
+  background: var(--accent-2);
+  animation: blink 0.9s steps(1) infinite;
+  vertical-align: -2px;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
 @keyframes spin {
   to {
     transform: rotate(360deg);
